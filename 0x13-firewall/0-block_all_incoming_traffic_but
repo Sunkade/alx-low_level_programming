@@ -1,23 +1,16 @@
-echo -e "Updating\n"
+#!/usr/bin/env bash
+#configures an uncomplicated firewall that blocks all incoming traffic
+#for the tcp ports 22(ssh) 443(https ssl) and 80(http).
 
-sudo apt-get update
+apt-get -y install ufw
+yes | ufw disable
+yes | ufw reset
 
-echo -e "Installing UFW\n"
+yes | ufw default deny incoming
+yes | ufw default allow outgoing
 
-sudo apt-get install -y ufw
-
-echo -e "configuring UFW...\n"
-
-# Allow Outgoing and Deny Incoming
-sudo ufw default deny incoming
-sudo ufw default allow outgoing
-
-# Allow ports
-sudo ufw allow 22
-sudo ufw allow 80
-sudo ufw allow 443
-
-# Enable Fire Wall
-sudo ufw enable
-
-echo -e "Process Completed.\n"
+yes | ufw allow 80/tcp
+yes | ufw allow ssh
+yes | ufw allow 443
+yes | ufw allow https
+yes | ufw enable
